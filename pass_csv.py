@@ -2,11 +2,15 @@ import csv
 import os
 
 the_dir = input("Enter the directory to work with.")
-os.chdir(str(the_dir))
+if not isinstance(the_dir, str):
+	the_dir = str(the_dir)
+res_partner_file = input("Enter the path to res_partner file.")
+if not isinstance(res_partner_file, str):
+	res_partner_file = str(res_partner_file)
+os.chdir(the_dir)
 source_dir = os.getcwd()
-items = os.listdir(os.getcwd())
-os.mkdir(source_dir + "/New")
-
+items = os.listdir(source_dir)
+os.mkdir('New')
     
 # Fields to be removed from the written csv
 blacklist = [
@@ -20,12 +24,12 @@ blacklist = [
 ]        
 
 # Method to pass-in and edit csv files for import into NACAPrEP Database. 
-def make_new_file(working_directory, working_file):
+def make_new_file(working_directory, working_file, res_partner_file):
     """Method that passes in a direcory and file for creation of another csv file."""
 
     # Paths to the files to be read from/written to.
     in_path = str(working_directory) + "/" + str(working_file)
-    partner_path = '/home/olalekan/Desktop/res.partner(all).csv'
+    partner_path = res_partner_file
     out_path = str(working_directory) + "/New/" + str(working_file) + "_new.csv"
     
     #Open respective files for reading/writing
@@ -80,4 +84,4 @@ def make_new_file(working_directory, working_file):
     
 # Execute the code here
 for item in items:
-    make_new_file(source_dir, item)
+    make_new_file(source_dir, item, res_partner_file)
